@@ -1,19 +1,15 @@
 const graphql = require('graphql');
 const _ = require('lodash');
-const { GraphQLObjectType, GraphQLString, GraphQLID } = graphql;
+const { GraphQLObjectType, GraphQLString, GraphQLID, GraphQLList } = graphql;
 const OrderType = require('./order_type');
 const ProductType = require('./product_type');
 const CustomerType = require('./customer_type');
 
-//Remove these to test against API endpoints
-const orders = require('../../../data/orders');
-const customers = require('../../../data/customers');
-const products = require('../../../data/products');
+//Provide API endpoints here
+const ordersApiEndpoint = `localhost:${process.env.PORT}/data/orders`;
+const productsApiEndpoint = `localhost:${process.env.PORT}/data/products`;
+const customersApiEndpoint = `localhost:${process.env.PORT}/data/customers`;
 
-//Provide endpoints here
-const ordersApiEndpoint = '';
-const productsApiEndpoint = '';
-const customersApiEndpoint = '';
 
 const RootQueryType = new GraphQLObjectType({
   name: 'RootQuery',
@@ -22,10 +18,18 @@ const RootQueryType = new GraphQLObjectType({
       type: OrderType,
       args: { id: { type: GraphQLString } },
       resolve(parentValue, args) {
+        return axios.get(`${ordersApiEndpoint}{ id: args.id }`)
+          .then(res => res.data);
+      
+      }
+    },
+    orders: {
+      type: new GraphQLList(OrderType),
+      resolve(parentValue, args) {
         if (orders) {
-          return _.find(orders, { id: args.id })
+          return orders
         } else {
-          return axios.get(`${ordersApiEndpoint} + { id: args.id }`)
+          return axios.get(`${ordersApiEndpoint}`)
             .then(res => res.data);
         }
       }
@@ -37,7 +41,18 @@ const RootQueryType = new GraphQLObjectType({
         if (products) {
           return _.find(products, { id: args.id })
         } else {
-          return axios.get(`${productsApiEndpoint} + { id: args.id }`)
+          return axios.get(`${productsApiEndpoint}{ id: args.id }`)
+            .then(res => res.data);
+        }
+      }
+    },
+    products: {
+      type: new GraphQLList(ProductType),
+      resolve(parentValue, args) {
+        if (orders) {
+          return orders
+        } else {
+          return axios.get(`${ordersApiEndpoint}`)
             .then(res => res.data);
         }
       }
@@ -49,7 +64,7 @@ const RootQueryType = new GraphQLObjectType({
         if (customers) {
           return _.find(customers, { id: args.id })
         } else {
-          return axios.get(`${productsApiEndpoint} + { id: args.id }`)
+          return axios.get(`${productsApiEndpoint}{ id: args.id }`)
             .then(res => res.data);
         }
       }
