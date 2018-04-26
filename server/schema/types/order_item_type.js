@@ -1,12 +1,12 @@
 const graphql = require ('graphql');
+const axios = require('axios');
 const _ = require('lodash');
 const {
   GraphQLObjectType,
   GraphQLString,
 } = graphql;
 
-const products = require('../../../data/products');
-const productsApiEndpoint = '';
+const { productsApiEndpoint } = require('../../../data/APIEndpoints')
 
 const OrderItemType = new GraphQLObjectType({
   name: 'OrderItem',
@@ -18,12 +18,8 @@ const OrderItemType = new GraphQLObjectType({
     description: {
       type: GraphQLString,
       resolve(parentValue, args) {
-        if (products) {
-          return _.find(products, { id: parentValue['product-id'] }).description
-        } else {
-          return axios.get(`${productsApiEndpoint}/${[parentValue['product-id']]}`)
-            .then(res => res.data.description);
-        }
+        return axios.get(`${productsApiEndpoint}${[parentValue['product-id']]}`)
+          .then(res => res.data.description);
       }
     },
     quantity: { type: GraphQLString },

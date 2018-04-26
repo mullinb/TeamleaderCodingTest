@@ -31,7 +31,6 @@ const OrderType = new GraphQLObjectType({
         parentValue.items.forEach((item) => {
           thisTotal += parseFloat(item.total)
         })
-        console.log(thisTotal);
         return (
           thisTotal.toFixed(2)
         )
