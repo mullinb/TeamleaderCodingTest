@@ -10,7 +10,7 @@ const { ordersApiEndpoint,
   dispatchOrderEndpoint } = require('../../data/APIEndpoints');
 
 function addProduct( { id, productid, quantity }) {
-  axios.put(ordersApiEndpoint+id, "hi")
+  axios.put(ordersApiEndpoint+id)
 }
 
 function removeProduct() {

@@ -1,21 +1,22 @@
 import React, { Component } from 'react';
-import ApolloClient from 'apollo-client';
+import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from 'react-apollo';
 
 import OrderList from "./components/OrderList";
 
-// const client = new ApolloClient({
-//   dataIdFromObject: o => o.id
-// })
+const client = new ApolloClient({
+  
+})
 
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        "HEHEHE"
-        <OrderList />
-      </div>
+      <ApolloProvider client={client}>
+        <div className="App">
+          <OrderList />
+        </div>
+      </ApolloProvider>
     );
   }
 }
