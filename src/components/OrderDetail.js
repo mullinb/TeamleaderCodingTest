@@ -21,7 +21,6 @@ class OrderDetail extends Component {
         showAvailableItems: !prevState.showAvailableItems
       }
     })
-    console.log(this.state)
   }
 
   hideAvailableItems() {
