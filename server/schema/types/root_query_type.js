@@ -1,5 +1,4 @@
 const graphql = require('graphql');
-const _ = require('lodash');
 const { GraphQLObjectType, GraphQLString, GraphQLID, GraphQLList } = graphql;
 const OrderType = require('./order_type');
 const ProductType = require('./product_type');
@@ -37,7 +36,7 @@ const RootQueryType = new GraphQLObjectType({
     products: {
       type: new GraphQLList(ProductType),
       resolve(parentValue, args) {
-        return axios.get(`${ordersApiEndpoint}`)
+        return axios.get(`${productsApiEndpoint}`)
           .then(res => res.data);
       }
     },
@@ -45,7 +44,7 @@ const RootQueryType = new GraphQLObjectType({
       type: CustomerType,
       args: { id: { type: GraphQLString } },
       resolve(parentValue, args) {
-        return axios.get(`${productsApiEndpoint}${args.id}`)
+        return axios.get(`${customersApiEndpoint}${args.id}`)
           .then(res => res.data);
       }
     }

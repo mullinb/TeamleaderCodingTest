@@ -3,10 +3,31 @@ import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
 
 import ItemList from './ItemList';
+import AddNewItem from './AddNewItem'
+
+import { query, options } from '../queries/GetOrderDetail'
 
 class OrderDetail extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      showAvailableItems: false
+    }
+  }
+
+  showAvailableItems() {
+    this.setState((prevState) => {
+      return {
+        showAvailableItems: !prevState.showAvailableItems
+      }
+    })
+    console.log(this.state)
+  }
+
+  hideAvailableItems() {
+    // this.setState({
+    //   showAvailableItems: false
+    // })
   }
 
   render() {
@@ -15,12 +36,16 @@ class OrderDetail extends Component {
     }
     const { id, total, items, customerid } = this.props.data.order
     return (
-      <div className="card large">
+      <div className="card">
         <div className="card-stacked">
           <div className="card-content">
             <h4> Order ID: {id} </h4>
             <h5> Customer ID: {customerid} </h5>
               <ItemList items={items} />
+              <div>
+                <a className="waves-effect waves-light btn-small" onClick={this.showAvailableItems.bind(this)}>{this.state.showAvailableItems ? "Cancel" : "Add new item"}</a>
+                <AddNewItem show={this.state.showAvailableItems} items={items} hideAvailableItems={this.hideAvailableItems.bind(this)} />
+              </div>
             <h5> Total: ${total} </h5>
           </div>
           <div className="card-action">
@@ -33,29 +58,4 @@ class OrderDetail extends Component {
   }
 }
 
-
-const query = gql`
-  query order($id: String!) {
-    order(id: $id) {
-      id,
-      customerid,
-      items {
-        productid
-        description,
-        quantity,
-        unitprice,
-        total
-      }
-      total
-    }
-  }
-`
-export default graphql(query, {
-  options: (ownProps) => {
-    return ({
-      variables: {
-        id: ownProps.id
-      }
-    })
-  }
-})(OrderDetail);
+export default graphql(query, options)(OrderDetail);

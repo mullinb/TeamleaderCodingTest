@@ -5,6 +5,8 @@ import { graphql } from 'react-apollo';
 import OrderList from "./OrderList";
 import OrderDetail from "./OrderDetail";
 
+import query from "../queries/GetAllOrders"
+
 class OrderManagementPage extends Component {
   constructor(props) {
     super(props);
@@ -49,21 +51,5 @@ class OrderManagementPage extends Component {
     );
   }
 }
-
-const query = gql`
-  {
-    orders {
-      id,
-      customerid,
-      items {
-        productid
-        description
-        quantity
-        unitprice
-      }
-      total
-    }
-  }
-`;
 
 export default graphql(query)(OrderManagementPage);
