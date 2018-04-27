@@ -25,7 +25,7 @@ class OrderDetail extends Component {
           </div>
           <div className="card-action">
             <a onClick={this.props.hideOrderDetail}>BACK</a>
-            <a onClick={this.props.dispatchOrder}>DISPATCH</a>
+            <a id={id} onClick={this.props.placeOrder}>PLACE ORDER</a>
           </div>
         </div>
       </div>
@@ -52,7 +52,6 @@ const query = gql`
 `
 export default graphql(query, {
   options: (ownProps) => {
-    console.log(ownProps);
     return ({
       variables: {
         id: ownProps.id

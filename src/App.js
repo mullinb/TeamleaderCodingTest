@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from 'react-apollo';
 
-import OrderList from "./components/OrderList";
+import OrderManagementPage from "./components/OrderManagementPage";
 
 const client = new ApolloClient({
-  
+
 })
 
 
@@ -14,7 +14,7 @@ class App extends Component {
     return (
       <ApolloProvider client={client}>
         <div className="App">
-          <OrderList />
+          <OrderManagementPage />
         </div>
       </ApolloProvider>
     );

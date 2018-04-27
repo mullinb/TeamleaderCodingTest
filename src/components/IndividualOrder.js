@@ -10,11 +10,9 @@ class IndividualOrder extends Component {
   render() {
     const { id, customerid, total } = this.props.order;
     return (
-      <li key={id} name={id} className="waves-effect waves-light btn"
-        onClick={(e) => {
-          this.props.showOrderDetail(e);
-        }
-      }>
+      <li key={id} id={id} className="waves-effect waves-light btn"
+        onClick={this.props.showOrderDetail}
+      >
         Order ID: {id} | Customer ID: {customerid} | Total: ${total}
       </li>
     )
