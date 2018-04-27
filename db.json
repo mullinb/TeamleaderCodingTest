@@ -19,7 +19,7 @@
       "revenue": "0.00"
     }
   ],
-  "orders":  [
+  "orders": [
     {
       "id": "1",
       "customer-id": "1",
@@ -97,8 +97,5 @@
       "category": "2",
       "price": "12.95"
     }
-  ],
-  "dispatchedOrders": [
-
   ]
 }

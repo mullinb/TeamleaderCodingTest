@@ -28,9 +28,6 @@ function addItems(orderid, items) {
         "total": (product.price * item.quantity).toFixed(2)
       }
     })
-    return axios.patch(ordersApiEndpoint+orderid, {
-      
-    })
   })
 }
 
