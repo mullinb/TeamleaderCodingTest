@@ -1,16 +1,37 @@
 const graphql = require('graphql');
 const _ = require('lodash');
 const { GraphQLObjectType, GraphQLString, GraphQLID, GraphQLList } = graphql;
-// const OrderType = require('./order_type');
-// const ProductType = require('./product_type');
-// const CustomerType = require('./customer_type');
 const axios = require('axios');
 
 const { ordersApiEndpoint,
-  dispatchOrderEndpoint } = require('../../data/APIEndpoints');
+  dispatchOrderEndpoint,
+  productsApiEndpoint } = require('../../data/APIEndpoints');
 
 function addProduct( { id, productid, quantity }) {
-  axios.put(ordersApiEndpoint+id)
+}
+
+function addItems(orderid, items) {
+  var products = [];
+  Promise.all(items.map((item) => {
+    return axios.get(productsApiEndpoint+item.id)
+      .then(res => {
+        products.push(res.data);
+      })
+  }))
+  .then(() => {
+    items = items.map((item) => {
+      let product = _.find(products, { id: item.id });
+      return {
+        "product-id": item.id,
+        "quantity": item.quantity,
+        "unit-price": product.price,
+        "total": (product.price * item.quantity).toFixed(2)
+      }
+    })
+    return axios.patch(ordersApiEndpoint+orderid, {
+      
+    })
+  })
 }
 
 function removeProduct() {
@@ -36,5 +57,6 @@ module.exports = {
   addProduct,
   removeProduct,
   changeProductQuantity,
-  placeOrder
+  placeOrder,
+  addItems
 }

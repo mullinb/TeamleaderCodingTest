@@ -2,13 +2,15 @@ const graphql = require('graphql');
 const {
     GraphQLObjectType,
     GraphQLString,
-    GraphQLInputObjectType
+    GraphQLInputObjectType,
+    GraphQLList
 } = graphql;
 
 const OrderType = require('./types/order_type');
 const OrderItemType = require('./types/order_item_type');
-const OrderService = require('../services/order');
+const AddItemsType = require('./types/add_items_type');
 
+const OrderService = require('../services/order');
 
 const mutation = new GraphQLObjectType({
     name: 'Mutation',
@@ -23,6 +25,18 @@ const mutation = new GraphQLObjectType({
             resolve(parentValue, { id, productid, quantity }) {
               return OrderService.addProduct({ id, productid, quantity });
             }
+        },
+        addItems: {
+          type: OrderType,
+          args: {
+            orderid: { type: GraphQLString },
+            items: {
+              type: new GraphQLList(AddItemsType)
+            }
+          },
+          resolve(parentValue, { orderid, items }) {
+            return OrderService.addItems(orderid, items);
+          }
         },
         removeProduct: {
           type: OrderType,
