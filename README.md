@@ -1,6 +1,6 @@
 # Coding Test: Order Management Application
 
-### Teamleader order processing app using React, GraphQL and Apollo Client.
+### App for Teamleader, using React, GraphQL and Apollo Client.
 
 To do: 
 <br>
