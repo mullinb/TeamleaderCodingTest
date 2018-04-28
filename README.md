@@ -6,8 +6,8 @@ To do:
 <br>
 <ul>
 <li>REST APIs on nested objects</li>
-Some frontend functionality
-Some backend functionality to match
+<li>Some frontend functionality</li>
+<li>Some backend functionality to match</li>
  </ul>
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
