@@ -6,7 +6,7 @@ const {
   GraphQLString,
 } = graphql;
 
-const { productsApiEndpoint } = require('../../../data/APIEndpoints')
+const { productsApiEndpoint } = require('../../../APIEndpoints')
 
 const OrderItemType = new GraphQLObjectType({
   name: 'OrderItem',

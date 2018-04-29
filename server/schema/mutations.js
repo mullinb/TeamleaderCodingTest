@@ -15,17 +15,6 @@ const OrderService = require('../services/order');
 const mutation = new GraphQLObjectType({
     name: 'Mutation',
     fields: {
-        addProduct: {
-            type: OrderType,
-            args: {
-              id: { type: GraphQLString },
-              productid: { type: GraphQLString },
-              quantity: { type: GraphQLString }
-            },
-            resolve(parentValue, { id, productid, quantity }) {
-              return OrderService.addProduct({ id, productid, quantity });
-            }
-        },
         addItems: {
           type: OrderType,
           args: {
@@ -38,32 +27,32 @@ const mutation = new GraphQLObjectType({
             return OrderService.addItems(orderid, items);
           }
         },
-        removeProduct: {
+        removeItem: {
           type: OrderType,
           args: {
-            id: { type: GraphQLString },
-            productid: { type: GraphQLString }
+            orderid: { type: GraphQLString },
+            itemid: { type: GraphQLString }
           },
-          resolve(parentValue, { id, productid }) {
-            return OrderService.removeProduct({ id, productid });
+          resolve(parentValue, { orderid, itemid }) {
+            return OrderService.removeItem(orderid, itemid);
           }
         },
         changeProductQuantity: {
           type: OrderType,
           args: {
-            id: { type: GraphQLString },
-            productid: { type: GraphQLString },
+            orderid: { type: GraphQLString },
+            itemid: { type: GraphQLString },
             quantity: { type: GraphQLString }
           },
-          resolve(parentValue, { id, productid, quantity }) {
-            return OrderService.changeProductQuantity({ id, productid, quantity });
+          resolve(parentValue, { orderid, item, quantity }) {
+            return OrderService.changeProductQuantity(orderid, item, quantity);
           }
         },
         placeOrder: {
           type: OrderType,
-          args: { id: { type: GraphQLString } },
-          resolve(parentValue, { id }) {
-            return OrderService.placeOrder({ id });
+          args: { orderid: { type: GraphQLString } },
+          resolve(parentValue, { orderid }) {
+            return OrderService.placeOrder(orderid);
           }
         }
     }

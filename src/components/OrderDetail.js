@@ -33,6 +33,7 @@ class OrderDetail extends Component {
     if (this.props.data.loading) {
       return <div>Loading order detail</div>
     }
+    console.log("this is props.data in the component that needs to rerender", this.props.data);
     const { id, total, items, customerid } = this.props.data.order
     return (
       <div className="card">
@@ -43,7 +44,7 @@ class OrderDetail extends Component {
               <ItemList items={items} />
               <div>
                 <a className="waves-effect waves-light btn-small" onClick={this.showAvailableItems.bind(this)}>{this.state.showAvailableItems ? "Cancel" : "Add new item"}</a>
-                <AddNewItem show={this.state.showAvailableItems} items={items} hideAvailableItems={this.hideAvailableItems.bind(this)} />
+                <AddNewItem show={this.state.showAvailableItems} orderid={id} total={total} items={items} hideAvailableItems={this.hideAvailableItems.bind(this)} />
               </div>
             <h5> Total: ${total} </h5>
           </div>

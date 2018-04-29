@@ -9,8 +9,4 @@ class AdjustQuantity extends Component {
 
   }
 
-  removeItem() {
-
-  }
-
 export default AdjustQuantity;

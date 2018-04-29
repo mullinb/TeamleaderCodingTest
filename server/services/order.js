@@ -5,20 +5,22 @@ const axios = require('axios');
 
 const { ordersApiEndpoint,
   dispatchOrderEndpoint,
-  productsApiEndpoint } = require('../../data/APIEndpoints');
-
-function addProduct( { id, productid, quantity }) {
-}
+  productsApiEndpoint } = require('../../APIEndpoints');
 
 function addItems(orderid, items) {
   var products = [];
-  Promise.all(items.map((item) => {
-    return axios.get(productsApiEndpoint+item.id)
-      .then(res => {
-        products.push(res.data);
+  return Promise.all([
+    Promise.all(items.map((item) => {
+      return axios.get(productsApiEndpoint+item.id)
+        .then(res => {
+          products.push(res.data);
+        })
       })
-  }))
-  .then(() => {
+    ),
+    axios.get(ordersApiEndpoint+orderid)
+  ])
+  .then((res) => {
+    let thisOrder = res[1].data;
     items = items.map((item) => {
       let product = _.find(products, { id: item.id });
       return {
@@ -28,14 +30,50 @@ function addItems(orderid, items) {
         "total": (product.price * item.quantity).toFixed(2)
       }
     })
+    let updatedOrderItems = [...thisOrder.items, ...items]
+    let newTotal = (parseFloat(thisOrder.total) + _.sumBy(items, function(item) { return parseFloat(item.total); })).toFixed(2)
+    return axios.patch(ordersApiEndpoint+orderid, {
+      items: updatedOrderItems,
+      total: newTotal
+    })
+    .then((res) => {
+      return res.data;
+    })
+  })
+  .catch((err) => {
+    return err
   })
 }
 
-function removeProduct() {
-  axios.put(ordersApiEndpoint)
+function removeItem(orderid, itemid) {
+  return axios.get(ordersApiEndpoint+orderid)
+  .then((res) => {
+    var thisOrder = res.data;
+    var subtotal;
+    var newItemList = _.remove(thisOrder.items, (item) => {
+      if (item['product-id']!==itemid) {
+        return true;
+      }
+      else {
+        subtotal = item.quantity * item['unit-price'];
+        return false;
+      }
+    })
+    console.log(newItemList);
+    return axios.patch(ordersApiEndpoint+orderid, {
+      items: newItemList,
+      total: (thisOrder.total - subtotal).toFixed(2)
+    })
+    .then((res) => {
+      return res.data;
+    })
+    .catch((err) => {
+      return err
+    })
+  })
 }
 
-function changeProductQuantity({ id }) {
+function changeProductQuantity(orderid, itemid, quantity) {
   axios.put(ordersApiEndpoint + id, )
 }
 
@@ -51,8 +89,7 @@ function placeOrder({ id }) {
 }
 
 module.exports = {
-  addProduct,
-  removeProduct,
+  removeItem,
   changeProductQuantity,
   placeOrder,
   addItems

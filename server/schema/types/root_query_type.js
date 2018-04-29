@@ -5,7 +5,7 @@ const ProductType = require('./product_type');
 const CustomerType = require('./customer_type');
 const axios = require('axios');
 
-const { ordersApiEndpoint, productsApiEndpoint, customersApiEndpoint } = require('../../../data/APIEndpoints')
+const { ordersApiEndpoint, productsApiEndpoint, customersApiEndpoint } = require('../../../APIEndpoints')
 
 const RootQueryType = new GraphQLObjectType({
   name: 'RootQuery',

@@ -28,7 +28,8 @@
     "webpack": "^4.6.0"
   },
   "scripts": {
-    "dev": "nodemon . && json-server --watch db.json",
+    "dev": "nodemon . --ignore db.json",
+    "db": "json-server db.json",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
