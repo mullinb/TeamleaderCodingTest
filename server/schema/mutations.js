@@ -37,15 +37,15 @@ const mutation = new GraphQLObjectType({
             return OrderService.removeItem(orderid, itemid);
           }
         },
-        changeProductQuantity: {
+        updateItemQuantity: {
           type: OrderType,
           args: {
             orderid: { type: GraphQLString },
             itemid: { type: GraphQLString },
             quantity: { type: GraphQLString }
           },
-          resolve(parentValue, { orderid, item, quantity }) {
-            return OrderService.changeProductQuantity(orderid, item, quantity);
+          resolve(parentValue, { orderid, itemid, quantity }) {
+            return OrderService.updateItemQuantity(orderid, itemid, quantity);
           }
         },
         placeOrder: {

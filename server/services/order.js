@@ -30,11 +30,10 @@ function addItems(orderid, items) {
         "total": (product.price * item.quantity).toFixed(2)
       }
     })
-    let updatedOrderItems = [...thisOrder.items, ...items]
-    let newTotal = (parseFloat(thisOrder.total) + _.sumBy(items, function(item) { return parseFloat(item.total); })).toFixed(2)
+    let newItemList = [...thisOrder.items, ...items]
     return axios.patch(ordersApiEndpoint+orderid, {
-      items: updatedOrderItems,
-      total: newTotal
+      items: newItemList,
+      total: _.sumBy(newItemList, function(item) { return parseFloat(item.total); }).toFixed(2)
     })
     .then((res) => {
       return res.data;
@@ -59,22 +58,42 @@ function removeItem(orderid, itemid) {
         return false;
       }
     })
-    console.log(newItemList);
     return axios.patch(ordersApiEndpoint+orderid, {
       items: newItemList,
-      total: (thisOrder.total - subtotal).toFixed(2)
+      total: _.sumBy(newItemList, function(item) { return parseFloat(item.total); }).toFixed(2)
     })
     .then((res) => {
       return res.data;
     })
     .catch((err) => {
-      return err
+      return err;
     })
   })
 }
 
-function changeProductQuantity(orderid, itemid, quantity) {
-  axios.put(ordersApiEndpoint + id, )
+function updateItemQuantity(orderid, itemid, quantity) {
+  return axios.get(ordersApiEndpoint+orderid)
+  .then((res) => {
+    var thisOrder = res.data;
+    var subtotal;
+    var newItemList = thisOrder.items.map((item) => {
+      if (item['product-id']===itemid) {
+        item.quantity = quantity;
+        item.total = (item.quantity * item['unit-price']).toFixed(2);
+      }
+      return item;
+    })
+    return axios.patch(ordersApiEndpoint+orderid, {
+      items: newItemList,
+      total: _.sumBy(newItemList, function(item) { return parseFloat(item.total); }).toFixed(2)
+    })
+    .then((res) => {
+      return res.data;
+    })
+    .catch((err) => {
+      return err;
+    })
+  })
 }
 
 function placeOrder({ id }) {
@@ -89,8 +108,9 @@ function placeOrder({ id }) {
 }
 
 module.exports = {
+  addItems,
   removeItem,
-  changeProductQuantity,
+  updateItemQuantity,
   placeOrder,
-  addItems
+
 }

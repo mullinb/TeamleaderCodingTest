@@ -51,13 +51,19 @@
       "customer-id": "3",
       "items": [
         {
+          "product-id": "A101",
+          "quantity": "23",
+          "unit-price": "9.75",
+          "total": "224.25"
+        },
+        {
           "product-id": "A102",
-          "quantity": "1",
+          "quantity": "23",
           "unit-price": "49.50",
-          "total": "49.50"
+          "total": "1138.50"
         }
       ],
-      "total": "49.50"
+      "total": "1362.75"
     }
   ],
   "products": [
