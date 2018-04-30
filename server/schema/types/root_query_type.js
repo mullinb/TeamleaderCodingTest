@@ -15,40 +15,40 @@ const RootQueryType = new GraphQLObjectType({
     order: {
       type: OrderType,
       args: {
-        id: { type: GraphQLString },
-        customerid: { type: GraphQLString }
+        id: { type: GraphQLString }
       },
-      resolve(parentValue, {id, customerid}) {
-        return OrderService.getOrderDetails(id, customerid);
+      resolve(parentValue, {id}) {
+        return axios.get(ordersApiEndpoint+id)
+          .then(res => res.data);
       }
     },
     orders: {
       type: new GraphQLList(OrderType),
-      resolve(parentValue, args) {
-        return axios.get(`${ordersApiEndpoint}`)
+      resolve(parentValue) {
+        return axios.get(ordersApiEndpoint)
           .then(res => res.data);
       }
     },
     product: {
       type: ProductType,
       args: { id: { type: GraphQLString } },
-      resolve(parentValue, args) {
-        return axios.get(`${productsApiEndpoint}${args.id}`)
+      resolve(parentValue, { id }) {
+        return axios.get(productsApiEndpoint+id)
           .then(res => res.data);
       }
     },
     products: {
       type: new GraphQLList(ProductType),
-      resolve(parentValue, args) {
-        return axios.get(`${productsApiEndpoint}`)
+      resolve(parentValue) {
+        return axios.get(productsApiEndpoint)
           .then(res => res.data);
       }
     },
     customer: {
       type: CustomerType,
       args: { id: { type: GraphQLString } },
-      resolve(parentValue, args) {
-        return axios.get(`${customersApiEndpoint}${args.id}`)
+      resolve(parentValue, { id }) {
+        return axios.get(customersApiEndpoint+id)
           .then(res => res.data);
       }
     }

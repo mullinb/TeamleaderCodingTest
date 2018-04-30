@@ -1,5 +1,6 @@
 const graphql = require ('graphql');
 const _ = require('lodash');
+const axios = require('axios');
 const {
   GraphQLObjectType,
   GraphQLString,
@@ -8,6 +9,8 @@ const {
 
 const OrderItemType = require('./order_item_type');
 
+const { customersApiEndpoint } = require('../../../APIEndpoints')
+
 const OrderType = new GraphQLObjectType({
   name: 'Order',
   fields: {
@@ -15,6 +18,18 @@ const OrderType = new GraphQLObjectType({
     customerid: {
       type: GraphQLString,
       resolve: (parent) => parent['customer-id']
+    },
+    customername: {
+      type: GraphQLString,
+      resolve(parentValue) {
+        console.log("HERE", parentValue);
+        return axios.get(customersApiEndpoint+parentValue['customer-id'])
+          .then(res => res.data.name)
+          .catch((err) => {
+            console.log(err);
+            return null;
+          })
+      }
     },
     items: {
       type: new GraphQLList (OrderItemType),

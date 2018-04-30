@@ -3,7 +3,7 @@ const axios = require('axios');
 const _ = require('lodash');
 const {
   GraphQLObjectType,
-  GraphQLString,
+  GraphQLString
 } = graphql;
 
 const { productsApiEndpoint } = require('../../../APIEndpoints')
@@ -17,7 +17,7 @@ const OrderItemType = new GraphQLObjectType({
     },
     description: {
       type: GraphQLString,
-      resolve(parentValue, args) {
+      resolve(parentValue) {
         return axios.get(`${productsApiEndpoint}${[parentValue['product-id']]}`)
           .then(res => res.data.description);
       }

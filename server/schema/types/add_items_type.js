@@ -1,7 +1,7 @@
 const graphql = require ('graphql');
 const {
-  GraphQLString,
   GraphQLInputObjectType,
+  GraphQLString
 } = graphql;
 
 

@@ -5,6 +5,7 @@ export const query = gql`
     order(id: $id) {
       id,
       customerid,
+      customername,
       items {
         productid
         description,

@@ -24,16 +24,17 @@ class OrderDetail extends Component {
   }
 
   render() {
+    console.log(this.props.data);
     if (this.props.data.loading || !this.props.data.order) {
       return <div>Loading order detail</div>
     }
-    const { id, total, items, customerid } = this.props.data.order
+    const { id, total, items, customerid, customername } = this.props.data.order
     return (
       <div className="card">
         <div className="card-stacked">
           <div className="card-content">
             <h4> Order ID: {id} </h4>
-            <h5> Customer ID: {customerid} </h5>
+            <h5> Customer ID: {customerid} | Customer Name: {customername} </h5>
               <ItemList items={items} orderid={id} />
               <div>
                 <a className="waves-effect waves-light btn-small" onClick={this.toggleAvailableItems}>{this.state.toggleAvailableItems ? "Cancel" : "Add new item"}</a>

@@ -5,20 +5,8 @@ const axios = require('axios');
 
 const { ordersApiEndpoint,
   dispatchOrderEndpoint,
-  productsApiEndpoint } = require('../../APIEndpoints');
-
-function getOrderDetails(orderid, customerid) {
-  Promise.all([
-    axios.get(ordersApiEndpoint+orderid),
-    axios.get(customersApiEndpoint+customerid)
-  ])
-  .then((res) => {
-    var thisOrder = res[0].data;
-    var thisCustomer = res[1].data;
-    thisOrder.customername = thisCustomer.name;
-    return thisOrder;
-  })
-}
+  productsApiEndpoint
+} = require('../../APIEndpoints');
 
 function addItems(orderid, items) {
   var products = [];
@@ -53,7 +41,8 @@ function addItems(orderid, items) {
     })
   })
   .catch((err) => {
-    return err
+    console.log(err);
+    return null;
   })
 }
 
@@ -79,7 +68,8 @@ function removeItem(orderid, itemid) {
       return res.data;
     })
     .catch((err) => {
-      return err;
+      console.log(err);
+      return null;
     })
   })
 }
@@ -104,7 +94,8 @@ function updateItemQuantity(orderid, itemid, quantity) {
       return res.data;
     })
     .catch((err) => {
-      return err;
+      console.log(err);
+      return null;
     })
   })
 }
@@ -124,6 +115,5 @@ module.exports = {
   addItems,
   removeItem,
   updateItemQuantity,
-  placeOrder,
-
+  placeOrder
 }
