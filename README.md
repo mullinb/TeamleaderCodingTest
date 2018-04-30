@@ -48,7 +48,7 @@
   <li>Express.js</li>
   <li>GraphQL.js</li>
   <li>Apollo Client</li>
-  <li>Axios/li>
+  <li>Axios</li>
   <li>Materialize CSS</li>
   <li>lodash</li>
 </ul>
