@@ -4,7 +4,9 @@
 
 <p>This app allows the user to manage existing orders in a database. The user has the ability to add and remove items for each order, and adjust the quantity of items that have already been added. In the end, an order can be "placed." When the user clicks this button, the order is removed from the "orders" collection (and thus from the order list), and moved to a new collection titled "dispatch."</p>
 
-<p>All database operations target API endpoints which are declared in the APIEndpoints.js file in the root directory. To test the program with a real REST API, simply update this file with the desired endpoints.</p>
+<p>All components responsively update with refreshed information after each user action on the database, exactly as we would want. Faulty inputs have not been extensively tested.</p>
+
+<p>Database operations target API endpoints which are declared in the APIEndpoints.js file in the root directory. To test the program with a real REST API, simply update this file with the desired endpoints.</p>
 
 #### To do:
 
