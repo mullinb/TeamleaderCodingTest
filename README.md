@@ -9,12 +9,12 @@ To do:
   <li>Would like to be able to create new orders</li>
 </ul>
 
-##### To try this app
+### To try this app:
 <ol>
-  <li>Globally install JSON server (npm install -g json-server)</li>
-  <li>Clone this repository</li>
-  <li>Open two terminal windows, navigating each to the local repository directory</li>
-  <li>Run "npm run dev" in one window and "npm run db" in another</li>
-  <li>Navigate to http://localhost:4000</li>
+  <li>Clone this repository.</li>
+  <li>Open two terminal windows, navigating each to the local repository directory.</li>
+    <li>Globally install JSON server ("npm install -g json-server").</li>
+  <li>Run "npm run dev" in one window and "npm run db" in another.</li>
+  <li>Navigate to http://localhost:4000.</li>
 </ol>
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
