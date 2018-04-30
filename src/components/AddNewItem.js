@@ -14,7 +14,8 @@ class AddNewItem extends Component {
       shoppingCart: [{
       }],
       subtotal: 0,
-      newTotal: 0
+      newTotal: 0,
+      finalTotal: 0
     }
   }
 
@@ -29,7 +30,9 @@ class AddNewItem extends Component {
       })
       return {
         shoppingCart: nextShoppingCart,
-        newTotal: nextProps.total
+        subtotal: 0,
+        newTotal: nextProps.total,
+        finalTotal: nextProps.total
       }
     } else {
       return prevState;
@@ -74,12 +77,12 @@ class AddNewItem extends Component {
       for (var p in quantities) {
         var product = _.find(this.props.data.products, { id: p })
         if (parseInt(quantities[p].quantity) > 0) {
-          subtotal += parseInt(quantities[p].quantity) * product.price;
+          subtotal += parseFloat((quantities[p].quantity * product.price).toFixed(2));
         }
       }
       return({
         subtotal: subtotal.toFixed(2),
-        newTotal: (parseInt(prevState.newTotal) + subtotal).toFixed(2)
+        newTotal: (parseFloat(prevState.finalTotal) + subtotal).toFixed(2)
       })
     })
   }
@@ -96,12 +99,24 @@ class AddNewItem extends Component {
         })
       }
     }
-    console.log("This console.log is immediately before the call to mutate");
     this.props.mutate({
       variables: {
         orderid: this.props.orderid,
         items: itemsToSubmit
-      }
+      },
+      refetchQueries: [{
+        query,
+        variables: {
+          id: this.props.orderid
+        }
+      }]
+    })
+    .then((res) => {
+      console.log(res);
+      this.props.toggleAvailableItems();
+    })
+    .catch((err) => {
+      console.log(err);
     })
   }
 
@@ -117,7 +132,7 @@ class AddNewItem extends Component {
             <div> Subtotal: ${this.state.subtotal}  New Total: ${this.state.newTotal}</div>
         </div>
         <div className="card-action">
-          <a onClick={this.close}>Cancel</a>
+          <a onClick={this.props.toggleAvailableItems}>Cancel</a>
           <a onClick={this.submitNewItems.bind(this)}>Add</a>
         </div>
       </div>
@@ -125,6 +140,4 @@ class AddNewItem extends Component {
   }
   }
 
-export default graphql(mutation, {
-
-})(graphql(allProductsQuery)(AddNewItem));
+export default graphql(mutation)(graphql(allProductsQuery)(AddNewItem));

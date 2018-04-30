@@ -1,8 +1,8 @@
-import gql from 'graphql-tag';
+import gql from 'graphql-tag'
 
 const mutation = gql`
-  mutation RemoveItem ($orderid: String, $itemid: String) {
-    removeItem(orderid: $orderid, itemid: $itemid) {
+  mutation UpdateItemQuantity ($orderid: String, $itemid: String, $quantity:String) {
+  	updateItemQuantity(orderid: $orderid, itemid: $itemid, quantity: $quantity) {
       id,
       customerid,
       items {

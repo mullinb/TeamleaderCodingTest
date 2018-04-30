@@ -4,6 +4,8 @@ const OrderType = require('./order_type');
 const ProductType = require('./product_type');
 const CustomerType = require('./customer_type');
 const axios = require('axios');
+const OrderService = require('../../services/order');
+
 
 const { ordersApiEndpoint, productsApiEndpoint, customersApiEndpoint } = require('../../../APIEndpoints')
 
@@ -12,10 +14,12 @@ const RootQueryType = new GraphQLObjectType({
   fields: {
     order: {
       type: OrderType,
-      args: { id: { type: GraphQLString } },
-      resolve(parentValue, args) {
-        return axios.get(ordersApiEndpoint + args.id)
-          .then(res => res.data);
+      args: {
+        id: { type: GraphQLString },
+        customerid: { type: GraphQLString }
+      },
+      resolve(parentValue, {id, customerid}) {
+        return OrderService.getOrderDetails(id, customerid);
       }
     },
     orders: {

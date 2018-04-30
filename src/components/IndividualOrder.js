@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import OrderDetail from './OrderDetail'
+import OrderDetail from './OrderDetail';
 
 class IndividualOrder extends Component {
   constructor(props) {

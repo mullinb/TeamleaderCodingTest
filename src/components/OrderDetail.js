@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
 
 import ItemList from './ItemList';
 import AddNewItem from './AddNewItem'
 
-import { query, options } from '../queries/GetOrderDetail'
+import { query, options } from '../queries/GetOrderDetail';
 
 class OrderDetail extends Component {
   constructor(props) {
@@ -13,9 +12,10 @@ class OrderDetail extends Component {
     this.state = {
       showAvailableItems: false
     }
+    this.toggleAvailableItems = this.toggleAvailableItems.bind(this);
   }
 
-  showAvailableItems() {
+  toggleAvailableItems() {
     this.setState((prevState) => {
       return {
         showAvailableItems: !prevState.showAvailableItems
@@ -23,17 +23,10 @@ class OrderDetail extends Component {
     })
   }
 
-  hideAvailableItems() {
-    // this.setState({
-    //   showAvailableItems: false
-    // })
-  }
-
   render() {
-    if (this.props.data.loading) {
+    if (this.props.data.loading || !this.props.data.order) {
       return <div>Loading order detail</div>
     }
-    console.log("this is props.data in the component that needs to rerender", this.props.data);
     const { id, total, items, customerid } = this.props.data.order
     return (
       <div className="card">
@@ -41,10 +34,10 @@ class OrderDetail extends Component {
           <div className="card-content">
             <h4> Order ID: {id} </h4>
             <h5> Customer ID: {customerid} </h5>
-              <ItemList items={items} />
+              <ItemList items={items} orderid={id} />
               <div>
-                <a className="waves-effect waves-light btn-small" onClick={this.showAvailableItems.bind(this)}>{this.state.showAvailableItems ? "Cancel" : "Add new item"}</a>
-                <AddNewItem show={this.state.showAvailableItems} orderid={id} total={total} items={items} hideAvailableItems={this.hideAvailableItems.bind(this)} />
+                <a className="waves-effect waves-light btn-small" onClick={this.toggleAvailableItems}>{this.state.toggleAvailableItems ? "Cancel" : "Add new item"}</a>
+                <AddNewItem show={this.state.showAvailableItems} orderid={id} total={total} items={items} toggleAvailableItems={this.toggleAvailableItems} />
               </div>
             <h5> Total: ${total} </h5>
           </div>

@@ -7,6 +7,19 @@ const { ordersApiEndpoint,
   dispatchOrderEndpoint,
   productsApiEndpoint } = require('../../APIEndpoints');
 
+function getOrderDetails(orderid, customerid) {
+  Promise.all([
+    axios.get(ordersApiEndpoint+orderid),
+    axios.get(customersApiEndpoint+customerid)
+  ])
+  .then((res) => {
+    var thisOrder = res[0].data;
+    var thisCustomer = res[1].data;
+    thisOrder.customername = thisCustomer.name;
+    return thisOrder;
+  })
+}
+
 function addItems(orderid, items) {
   var products = [];
   return Promise.all([
