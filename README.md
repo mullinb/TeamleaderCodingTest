@@ -25,7 +25,7 @@
   <li>Install dependencies with <code>npm install</code>.</li>
   <li>Globally install JSON server (<code>npm install -g json-server</code>).</li>
   <li>Run <code>npm run dev</code> in one window and <code>npm run db</code> in another.</li>
-  <li>Navigate to http://localhost:4000.</li>
+  <li>Navigate to http://localhost:4000. The database will automatically be served from http://localhost:3000</li>
   <li>If desired, update the API endpoints in the APIEndpoints.js file.</li>
 </ol>
 
