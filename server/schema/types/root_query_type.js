@@ -1,11 +1,12 @@
 const graphql = require('graphql');
-const { GraphQLObjectType, GraphQLString, GraphQLID, GraphQLList } = graphql;
+const axios = require('axios');
+const { GraphQLObjectType,
+  GraphQLString,
+  GraphQLList } = graphql;
+
 const OrderType = require('./order_type');
 const ProductType = require('./product_type');
 const CustomerType = require('./customer_type');
-const axios = require('axios');
-const OrderService = require('../../services/order');
-
 
 const { ordersApiEndpoint, productsApiEndpoint, customersApiEndpoint } = require('../../../APIEndpoints')
 
@@ -44,7 +45,7 @@ const RootQueryType = new GraphQLObjectType({
           .then(res => res.data);
       }
     },
-    customer: {
+    customer: { // Unused, but would be useful in a more robust version of this application.
       type: CustomerType,
       args: { id: { type: GraphQLString } },
       resolve(parentValue, { id }) {

@@ -1,12 +1,17 @@
-const graphql = require('graphql');
 const _ = require('lodash');
-const { GraphQLObjectType, GraphQLString, GraphQLID, GraphQLList } = graphql;
 const axios = require('axios');
 
 const { ordersApiEndpoint,
   dispatchOrderEndpoint,
   productsApiEndpoint
 } = require('../../APIEndpoints');
+
+module.exports = {
+  addItems,
+  removeItem,
+  updateItemQuantity,
+  placeOrder
+};
 
 function addItems(orderid, items) {
   var products = [];
@@ -54,8 +59,7 @@ function removeItem(orderid, itemid) {
     var newItemList = _.remove(thisOrder.items, (item) => {
       if (item['product-id']!==itemid) {
         return true;
-      }
-      else {
+      } else {
         subtotal = item.quantity * item['unit-price'];
         return false;
       }
@@ -109,11 +113,4 @@ function placeOrder({ id }) {
       console.log("The following order was just dispatched!\n" + res.data.order);
     })
   }
-}
-
-module.exports = {
-  addItems,
-  removeItem,
-  updateItemQuantity,
-  placeOrder
 }

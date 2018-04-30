@@ -10,7 +10,7 @@ const OrderType = require('./types/order_type');
 const OrderItemType = require('./types/order_item_type');
 const AddItemsType = require('./types/add_items_type');
 
-const OrderService = require('../services/order');
+const OrderService = require('../services/orderService');
 
 const mutation = new GraphQLObjectType({
     name: 'Mutation',
