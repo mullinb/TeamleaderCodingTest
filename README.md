@@ -2,7 +2,7 @@
 
 ### App for Teamleader, using React with Apollo Client and GraphQL.js served by Node.js/Express.js. Test database uses <a href="https://github.com/typicode/json-server">JSON Server</a>.
 
-<p>This app allows the user to manage existing orders in a database. The user has the ability to add and remove items for each order, and adjust the quantity of items that have already been added. In the end, an order can be "placed." When the user clicks this button, the order is removed from the "orders" collection (and thus from the order list), and moved to a new collection titled "dispatch."</p>
+<p>This app allows the user to manage existing orders in a database. The user has the ability to add and remove items for each order, and adjust the quantity of items that have already been added. In the end, an order can be "placed." When the user clicks this button, the order is removed from the `"orders"` collection (and thus from the order list), and moved to a new collection titled `"dispatch."`</p>
 
 <p>All components responsively update with refreshed information after each user action on the database, exactly as we would want. Faulty inputs have not been extensively tested.</p>
 
@@ -18,12 +18,14 @@
 
 ### To try this app:
 <ol>
+  <li>Have node.js installed.</li>
   <li>Clone this repository.</li>
   <li>Open two terminal windows, navigating each to the local repository directory.</li>
-  <li>Globally install JSON server ("npm install -g json-server").</li>
-  <li>Run "npm run dev" in one window and "npm run db" in another.</li>
+  <li>Install dependencies with `npm install`.</li>t
+  <li>Globally install JSON server (`npm install -g json-server`).</li>
+  <li>Run `npm run dev` in one window and `npm run db` in another.</li>
   <li>Navigate to http://localhost:4000.</li>
-  <li>If desired, update the API endpoints in the APIEndpoints.js file.<li>
+  <li>If desired, update the API endpoints in the APIEndpoints.js file.</li>
 </ol>
 
 #### Technologies:
