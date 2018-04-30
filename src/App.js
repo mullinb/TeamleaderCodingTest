@@ -5,8 +5,7 @@ import { ApolloProvider } from 'react-apollo';
 import OrderManagementPage from "./components/OrderManagementPage";
 
 const client = new ApolloClient({
-  dataIdFromObject: o => `${o.__typename}-${o.id},`,
-  connectToDevTools: true
+  dataIdFromObject: o => `${o.__typename}-${o.id},`
 })
 
 

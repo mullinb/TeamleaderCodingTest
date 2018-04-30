@@ -104,13 +104,21 @@ function updateItemQuantity(orderid, itemid, quantity) {
   })
 }
 
-function placeOrder({ id }) {
-  if (dispatchOrderEndpoint) {
-    axios.post(dispatchOrderEndpoint, id)
-  } else {
-    axios.get(ordersApiEndpoint + id)
-    .then((res) => {
-      console.log("The following order was just dispatched!\n" + res.data.order);
-    })
-  }
+function placeOrder(orderid) {
+  var thisOrder;
+  return axios.get(ordersApiEndpoint + orderid)
+  .then((res)=>{
+    thisOrder = res.data;
+    return axios.post(dispatchOrderEndpoint, thisOrder)
+  })
+  .then((res) => {
+    return axios.delete(ordersApiEndpoint + orderid);
+  })
+  .then((res) => {
+    return thisOrder;
+  })
+  .catch((err) => {
+    console.log(err);
+    return null;
+  })
 }

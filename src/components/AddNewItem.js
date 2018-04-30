@@ -11,17 +11,16 @@ class AddNewItem extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      shoppingCart: [{
-      }],
+      shoppingCart: [{}],
       subtotal: 0,
       newTotal: 0,
-      finalTotal: 0
+      currentTotal: 0
     }
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
     if (!nextProps.data.loading) {
-      var nextShoppingCart = {}
+      var nextShoppingCart = {};
       nextProps.data.products.forEach((p) => {
         if (_.find(nextProps.items, { productid: p.id })) {
           return;
@@ -32,7 +31,7 @@ class AddNewItem extends Component {
         shoppingCart: nextShoppingCart,
         subtotal: 0,
         newTotal: nextProps.total,
-        finalTotal: nextProps.total
+        currentTotal: nextProps.total
       }
     } else {
       return prevState;
@@ -41,11 +40,11 @@ class AddNewItem extends Component {
 
   renderAllAvailableProducts() {
     if (this.props.data.loading) {
-      return;
+      return null;
     }
     return this.props.data.products.map(({ id, description, category, price }) => {
       if (_.find(this.props.items, { productid: id })) {
-        return;
+        return null;
       }
       return (
         <div key={id}>{id} {description} | Category: {category} | Price: ${price}
@@ -82,14 +81,13 @@ class AddNewItem extends Component {
       }
       return({
         subtotal: subtotal.toFixed(2),
-        newTotal: (parseFloat(prevState.finalTotal) + subtotal).toFixed(2)
+        newTotal: (parseFloat(prevState.currentTotal) + subtotal).toFixed(2)
       })
     })
   }
 
   submitNewItems(e) {
     e.preventDefault();
-
     var itemsToSubmit = [];
     for (var p in this.state.shoppingCart) {
       if (this.state.shoppingCart[p].quantity > 0) {
@@ -111,8 +109,7 @@ class AddNewItem extends Component {
         }
       }]
     })
-    .then((res) => {
-      console.log(res);
+    .then(() => {
       this.props.toggleAvailableItems();
     })
     .catch((err) => {

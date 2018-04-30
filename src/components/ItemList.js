@@ -27,6 +27,7 @@ class ItemList extends Component {
       })
     }
   }
+
   hideQuantityAdjuster() {
     this.setState({
       currentItemToAdjustQuantity: ''
@@ -45,6 +46,9 @@ class ItemList extends Component {
           id: this.props.orderid
         }
       }]
+    })
+    .catch((err) => {
+      console.log(err);
     })
   }
 

@@ -25,16 +25,15 @@ class QuantityAdjuster extends Component {
   renderDropdown() {
     var options = new Array(100);
     for (var i=0; i<options.length; i++) {
-      if (i+1 === parseInt(this.props.item.quantity)) {
-        options[i] = <option key={i+1} value={i+1}>{i+1}</option>
-      } else {
-        options[i] = <option key={i+1} value={i+1}>{i+1}</option>
-      }
+      options[i] = <option key={i+1} value={i+1}>{i+1}</option>
     }
     return(
       <form onSubmit={this.adjustQuantity.bind(this)}>
         <label>Select New Quantity
-          <select style={{display: "block", width: "40%"}} value={this.state.newQuantity} onChange={this.handleChange.bind(this)}>
+          <select
+            style={{display: "block", width: "40%"}}
+            value={this.state.newQuantity}
+            onChange={this.handleChange.bind(this)} >
             {options.map(option => option)}
           </select>
         </label>
@@ -51,7 +50,6 @@ class QuantityAdjuster extends Component {
 
   adjustQuantity(e) {
     e.preventDefault();
-    console.log(this.props.orderid, this.props.item.productid, this.state.newQuantity);
     this.props.mutate({
       variables: {
         orderid: this.props.orderid,

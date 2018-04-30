@@ -3,7 +3,8 @@ const {
     GraphQLObjectType,
     GraphQLString,
     GraphQLInputObjectType,
-    GraphQLList
+    GraphQLList,
+    GraphQLBoolean
 } = graphql;
 
 const OrderType = require('./types/order_type');

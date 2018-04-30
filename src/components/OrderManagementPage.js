@@ -27,19 +27,11 @@ class OrderManagementPage extends Component {
     })
   }
 
-  placeOrder(e) {
-    this.props.mutate({
-      id: e.target.getAttribute('id')
-    })
-    console.log("You placed the order with id ", e.target.getAttribute('id'));
-  }
-
   render() {
     if (this.state.currentOrderDetail) {
       return (
         <OrderDetail
           id={this.state.currentOrderDetail}
-          placeOrder={this.placeOrder.bind(this)}
           hideOrderDetail={this.hideOrderDetail.bind(this)} />
       )
     }
