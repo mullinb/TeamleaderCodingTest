@@ -1,16 +1,25 @@
 # Coding Test: Order Management Application
 
+### App for Teamleader, using React with Apollo Client and GraphQL.js served by Node.js/Express.js. Test database uses <a href="https://github.com/typicode/json-server">JSON Server</a>.
+
 <div align="center" width="700px">
   <img src="https://s3.amazonaws.com/fluxlymoppings/pics/Screen+Shot+2018-04-30+at+18.25.38.png">
 </div>
 
-### App for Teamleader, using React with Apollo Client and GraphQL.js served by Node.js/Express.js. Test database uses <a href="https://github.com/typicode/json-server">JSON Server</a>.
+<p>This app allows the user to manage existing orders in a database. The user has the ability to add and remove items for each order, and adjust the quantity of items that have already been added. In the end, an order can be "placed." When the user clicks this button, the order is removed from the <code>"orders"</code> collection (and thus from the order list), and moved to a new collection titled <code>"dispatch"</code>. The successfully placed order is logged to the console on both the browser client and on the server.</p>
 
-<p>This app allows the user to manage existing orders in a database. The user has the ability to add and remove items for each order, and adjust the quantity of items that have already been added. In the end, an order can be "placed." When the user clicks this button, the order is removed from the <code>"orders"</code> collection (and thus from the order list), and moved to a new collection titled <code>"dispatch"</code>.</p>
+<div align="center" width="700px">
+  <img src="https://s3.amazonaws.com/fluxlymoppings/pics/Screen+Shot+2018-04-30+at+18.25.49.png">
+</div>
 
 <p>All components responsively update with refreshed information after each user action on the database, exactly as we would want. Faulty inputs have not been extensively tested.</p>
 
+
 <p>Database operations target API endpoints which are declared in the APIEndpoints.js file in the root directory. To test the program with a real REST API, simply update this file with the desired endpoints.</p>
+
+<div align="center" width="700px">
+  <img src="https://s3.amazonaws.com/fluxlymoppings/pics/Screen+Shot+2018-04-30+at+18.26.04.png">
+</div>
 
 
 #### To do:
