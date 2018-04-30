@@ -21,8 +21,8 @@
   <li>Have node.js installed.</li>
   <li>Clone this repository.</li>
   <li>Open two terminal windows, navigating each to the local repository directory.</li>
-  <li>Install dependencies with `npm install`.</li>t
-  <li>Globally install JSON server (`npm install -g json-server`).</li>
+  <li>Install dependencies with `npm install` .</li>t
+  <li>Globally install JSON server ( `npm install -g json-server` ).</li>
   <li>Run `npm run dev` in one window and `npm run db` in another.</li>
   <li>Navigate to http://localhost:4000.</li>
   <li>If desired, update the API endpoints in the APIEndpoints.js file.</li>
