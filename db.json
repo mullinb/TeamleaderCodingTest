@@ -19,7 +19,7 @@
       "revenue": "0.00"
     }
   ],
-  "orders": [
+  "orders":  [
     {
       "id": "1",
       "customer-id": "1",
@@ -52,9 +52,9 @@
       "items": [
         {
           "product-id": "A101",
-          "quantity": "99",
+          "quantity": "2",
           "unit-price": "9.75",
-          "total": "965.25"
+          "total": "19.50"
         },
         {
           "product-id": "A102",
@@ -63,7 +63,7 @@
           "total": "49.50"
         }
       ],
-      "total": "1014.75"
+      "total": "69.00"
     }
   ],
   "products": [
@@ -98,5 +98,7 @@
       "price": "12.95"
     }
   ],
-  "dispatch": []
+  "dispatch": [
+
+  ]
 }
