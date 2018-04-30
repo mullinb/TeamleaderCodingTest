@@ -35,7 +35,8 @@ class OrderDetail extends Component {
       }]
     })
     .then((res) => {
-      console.log(res);
+      const order = res.data.placeOrder;
+      console.log("The following order has been dispatched!\n" + `order ID: ${order.id} | Customer: ${order.customername} | total: ${order.total}`);
       this.props.hideOrderDetail();
     })
   }

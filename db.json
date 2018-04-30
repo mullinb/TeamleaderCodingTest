@@ -19,40 +19,7 @@
       "revenue": "0.00"
     }
   ],
-  "orders": [],
-  "products": [
-    {
-      "id": "A101",
-      "description": "Screwdriver",
-      "category": "1",
-      "price": "9.75"
-    },
-    {
-      "id": "A102",
-      "description": "Electric screwdriver",
-      "category": "1",
-      "price": "49.50"
-    },
-    {
-      "id": "B101",
-      "description": "Basic on-off switch",
-      "category": "2",
-      "price": "4.99"
-    },
-    {
-      "id": "B102",
-      "description": "Press button",
-      "category": "2",
-      "price": "4.99"
-    },
-    {
-      "id": "B103",
-      "description": "Switch with motion detector",
-      "category": "2",
-      "price": "12.95"
-    }
-  ],
-  "dispatch": [
+  "orders": [
     {
       "id": "1",
       "customer-id": "1",
@@ -85,9 +52,9 @@
       "items": [
         {
           "product-id": "A101",
-          "quantity": "2",
+          "quantity": "99",
           "unit-price": "9.75",
-          "total": "19.50"
+          "total": "965.25"
         },
         {
           "product-id": "A102",
@@ -96,7 +63,40 @@
           "total": "49.50"
         }
       ],
-      "total": "69.00"
+      "total": "1014.75"
     }
-  ]
+  ],
+  "products": [
+    {
+      "id": "A101",
+      "description": "Screwdriver",
+      "category": "1",
+      "price": "9.75"
+    },
+    {
+      "id": "A102",
+      "description": "Electric screwdriver",
+      "category": "1",
+      "price": "49.50"
+    },
+    {
+      "id": "B101",
+      "description": "Basic on-off switch",
+      "category": "2",
+      "price": "4.99"
+    },
+    {
+      "id": "B102",
+      "description": "Press button",
+      "category": "2",
+      "price": "4.99"
+    },
+    {
+      "id": "B103",
+      "description": "Switch with motion detector",
+      "category": "2",
+      "price": "12.95"
+    }
+  ],
+  "dispatch": []
 }

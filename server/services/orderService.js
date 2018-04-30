@@ -115,6 +115,7 @@ function placeOrder(orderid) {
     return axios.delete(ordersApiEndpoint + orderid);
   })
   .then((res) => {
+    console.log("The following order has been dispatched!\n" + `order ID: ${orderid} | Customer ID:${thisOrder['customer-id']} | total:${thisOrder.total}`);
     return thisOrder;
   })
   .catch((err) => {
