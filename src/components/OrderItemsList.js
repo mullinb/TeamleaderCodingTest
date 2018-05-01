@@ -7,7 +7,7 @@ import mutation from '../mutations/RemoveItem';
 import { query, options } from '../queries/GetOrderDetail'
 
 
-class ItemList extends Component {
+class OrderItemsList extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -82,4 +82,4 @@ class ItemList extends Component {
   }
 }
 
-export default graphql(mutation)(ItemList);
+export default graphql(mutation)(OrderItemsList);

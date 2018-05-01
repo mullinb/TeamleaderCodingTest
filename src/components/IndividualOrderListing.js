@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import OrderDetail from './OrderDetail';
 
-class IndividualOrder extends Component {
+class IndividualOrderListing extends Component {
   constructor(props) {
     super(props);
   }
@@ -18,4 +18,4 @@ class IndividualOrder extends Component {
   }
 }
 
-export default IndividualOrder;
+export default IndividualOrderListing;

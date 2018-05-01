@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { graphql } from 'react-apollo';
 
-import ItemList from './ItemList';
-import AddNewItem from './AddNewItem'
+import OrderItemsList from './OrderItemsList';
+import AddAdditionalItems from './AddAdditionalItems';
 
 import getAllOrdersQuery from '../queries/GetAllOrders';
 import { query, options } from '../queries/GetOrderDetail';
@@ -52,12 +52,12 @@ class OrderDetail extends Component {
           <div className="card-content">
             <h4> Order ID: {id} </h4>
             <h5> Customer ID: {customerid} | Customer Name: {customername} </h5>
-            <ItemList items={items} orderid={id} />
+            <OrderItemsList items={items} orderid={id} />
             <div>
               <a className="waves-effect waves-light btn-small" onClick={this.toggleAvailableItems}>
                 {this.state.toggleAvailableItems ? "Cancel" : "Add new item"}
               </a>
-              <AddNewItem
+              <AddAdditionalItems
                 show={this.state.showAvailableItems}
                 orderid={id}
                 total={total}

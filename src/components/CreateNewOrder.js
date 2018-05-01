@@ -1,14 +1,17 @@
 import React, { Component } from 'react';
 import { graphql } from 'react-apollo';
 
-import AddNewItem from './AddNewItem';
+import AddAdditionalItems from './AddAdditionalItems';
+
+import mutation from '../mutations/CreateOrder';
 
 class CreateNewOrder extends Component {
   constructor(props) {
     super(props);
     this.state = {
       showOrderForm: false,
-      newOrderID: '',
+      customerid: '',
+      shoppingCart: [{}]
     }
     this.toggleOrderForm = this.toggleOrderForm.bind(this);
   }
@@ -21,14 +24,42 @@ class CreateNewOrder extends Component {
     })
   }
 
+  updateShoppingCart(nextShoppingCart) => {
+    this.setState({
+      shoppingCart: nextShoppingCart
+    })
+  }
+
+  handleChangeOnCustomerID(e) {
+    let target = e.target;
+    this.setState({
+      customerid: target.value;
+    })
+  }
+
+  submitNewOrder() {
+    this.props.mutate({
+      variables: {
+        items:this.state.shoppingCart
+      }
+    })
+  }
+
   renderNewOrderForm() {
     return (
-      <AddNewItem
-        show={this.state.showOrderForm}
-        orderid={null}
-        total={0}
-        items={null}
-        toggleAvailableItems={this.toggleOrderForm} />
+      <div className="card green darken-3">
+        <div className="card-content white-text">
+          <span className="card-title">Create New Order</span>
+            <label>Customer ID
+              <input type="text" value={this.state.customerid} onChange={this.handleChangeOnCustomerID.bind(this)} />
+            </label>
+            <ItemOrderForm items={null} updateShoppingCart={this.updateShoppingCart.bind(this)} />
+        </div>
+        <div className="card-action">
+          <a onClick={this.props.toggleOrderForm}>Cancel</a>
+          <a onClick={this.submitNewOrder.bind(this)}>Create</a>
+        </div>
+      </div>
     )
   }
 
@@ -44,4 +75,4 @@ class CreateNewOrder extends Component {
   }
 }
 
-export default CreateNewOrder;
+export default graphql(mutation)(CreateNewOrder);

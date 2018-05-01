@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { graphql } from 'react-apollo';
 
-import IndividualOrder from "./IndividualOrder";
+import IndividualOrderListing from "./IndividualOrderListing";
 
 class OrderList extends Component {
   constructor(props) {
@@ -16,7 +16,7 @@ class OrderList extends Component {
   renderAllOrders() {
     return this.props.orders.map(order => {
       return (
-        <IndividualOrder
+        <IndividualOrderListing
           key={order.id}
           order={order}
           showOrderDetail={this.showOrderDetail.bind(this)} />
