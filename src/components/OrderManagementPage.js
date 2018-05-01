@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
 
 import OrderList from "./OrderList";
 import OrderDetail from "./OrderDetail";
+import CreateNewOrder from './CreateNewOrder';
 
 import query from "../queries/GetAllOrders"
 
@@ -39,7 +39,10 @@ class OrderManagementPage extends Component {
       return (<div>Orders loading...</div>)
     }
     return (
-      <OrderList orders={this.props.data.orders} showOrderDetail={this.showOrderDetail.bind(this)}/>
+      <div>
+        <OrderList orders={this.props.data.orders} showOrderDetail={this.showOrderDetail.bind(this)}/>
+        <CreateNewOrder />
+      </div>
     );
   }
 }
