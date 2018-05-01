@@ -12,10 +12,10 @@
   <img src="https://s3.amazonaws.com/fluxlymoppings/pics/Screen+Shot+2018-04-30+at+18.25.49.png">
 </div>
 
-<p>All components responsively update with refreshed information after each user action on the database, exactly as we would want. Faulty inputs have not been extensively tested.</p>
+<p>All components responsively update with refreshed information after each user action on the database, exactly as we would want. Invalid inputs have not been extensively tested.</p>
 
 
-<p>Database operations target API endpoints which are declared in the APIEndpoints.js file in the root directory. To test the program with a real REST API, simply update this file with the desired endpoints.</p>
+<p>Database operations target API endpoints which are declared in the APIEndpoints.js file in the root directory. To test the program with a real REST API, update this file with the desired endpoints.</p>
 
 <div align="center" width="700px">
   <img src="https://s3.amazonaws.com/fluxlymoppings/pics/Screen+Shot+2018-04-30+at+18.26.04.png">
