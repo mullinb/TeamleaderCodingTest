@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { compose, graphql } from 'react-apollo';
+import { Link } from 'react-router-dom';
 
 import OrderItemsList from './OrderItemsList';
 import AddAdditionalItems from './AddAdditionalItems';
@@ -67,13 +68,14 @@ class OrderDetail extends Component {
     })
   }
 
+
   render() {
     if (this.props.data.loading || !this.props.data.order) {
       return <div>Loading order detail</div>
     }
     const { id, total, items, customerid, customername } = this.props.data.order
     return (
-      <div className="card">
+      <div className="card blue-grey lighten-5">
         <div className="card-stacked">
           <div className="card-content">
             <h4> Order ID: {id} </h4>
@@ -81,7 +83,7 @@ class OrderDetail extends Component {
             <OrderItemsList items={items} orderid={id} />
             <div>
               <a className="waves-effect waves-light btn-small" onClick={this.toggleAvailableItems}>
-                {this.state.toggleAvailableItems ? "Cancel" : "Add new item"}
+                {this.state.showAvailableItems ? "Cancel" : "Add new item"}
               </a>
               <AddAdditionalItems
                 show={this.state.showAvailableItems}
@@ -93,9 +95,9 @@ class OrderDetail extends Component {
             <h5> Total: ${total} </h5>
           </div>
           <div className="card-action">
-            <a onClick={this.props.hideOrderDetail}>BACK</a>
-            <a id={id} onClick={this.placeOrder.bind(this)}>PLACE ORDER</a>
-            <a id={id} onClick={this.deleteOrder.bind(this)}>DELETE ORDER</a>
+            <Link className="btn-small" to="/">BACK</Link>
+            <a id={id} className="btn-large blue" onClick={this.placeOrder.bind(this)}>PLACE ORDER</a>
+            <a id={id} className="btn-large red lighten-2" onClick={this.deleteOrder.bind(this)}>DELETE ORDER</a>
           </div>
         </div>
       </div>

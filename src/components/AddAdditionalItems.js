@@ -51,14 +51,14 @@ class AddAdditionalItems extends Component {
       return null;
     }
     return(
-      <div className="card blue-grey darken-1">
+      <div className="card blue-grey">
         <div className="card-content white-text">
           <span className="card-title">Add New Items</span>
             <ItemOrderForm items={this.props.items} total={this.props.total} shoppingCart={this.state.shoppingCart} updateShoppingCart={this.updateShoppingCart.bind(this)} />
         </div>
         <div className="card-action">
-          <a onClick={this.props.toggleAvailableItems}>Cancel</a>
-          <a onClick={this.submitNewItems.bind(this)}>Add</a>
+          <a className="btn-small " onClick={this.props.toggleAvailableItems}>Cancel</a>
+          <a className="btn blue-grey darken-2" onClick={this.submitNewItems.bind(this)}>Add</a>
         </div>
       </div>
     )
