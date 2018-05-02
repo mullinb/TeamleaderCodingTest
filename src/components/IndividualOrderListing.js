@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import OrderDetail from './OrderDetail';
 
-class IndividualOrder extends Component {
+class IndividualOrderListing extends Component {
   constructor(props) {
     super(props);
   }
@@ -10,7 +10,7 @@ class IndividualOrder extends Component {
   render() {
     const { id, customerid, total } = this.props.order;
     return (
-      <li key={id} id={id} className="waves-effect waves-light btn"
+      <li key={id} id={id} className="waves-effect waves-light btn" style={{"width": "500px"}}
         onClick={this.props.showOrderDetail}>
         Order ID: {id} | Customer ID: {customerid} | Total: ${total}
       </li>
@@ -18,4 +18,4 @@ class IndividualOrder extends Component {
   }
 }
 
-export default IndividualOrder;
+export default IndividualOrderListing;

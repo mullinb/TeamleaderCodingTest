@@ -3,15 +3,62 @@ const axios = require('axios');
 
 const { ordersApiEndpoint,
   dispatchOrderEndpoint,
-  productsApiEndpoint
+  productsApiEndpoint,
+  customersApiEndpoint
 } = require('../../APIEndpoints');
 
+
 module.exports = {
+  createOrder,
+  deleteOrder,
   addItems,
   removeItem,
   updateItemQuantity,
   placeOrder
 };
+
+function createOrder(customerid, items) {
+  var products = [];
+  return axios.get(customersApiEndpoint+customerid)
+  .then((res) => {
+    return Promise.all(items.map((item) => {
+      return axios.get(productsApiEndpoint+item.id)
+        .then(res => {
+          products.push(res.data);
+        })
+    }))
+  })
+  .then((res)=> {
+    items = items.map((item) => {
+      let product = _.find(products, { id: item.id });
+      return {
+        "product-id": item.id,
+        "quantity": item.quantity,
+        "unit-price": product.price,
+        "total": (product.price * item.quantity).toFixed(2)
+      }
+    })
+    return axios.post(ordersApiEndpoint, {
+      "customer-id": customerid,
+      "items": items,
+      "total": _.sumBy(items, function(item) { return parseFloat(item.total); }).toFixed(2)
+    })
+  })
+  .then(res => res.data)
+  .catch((err) => {
+    return err;
+  })
+}
+
+function deleteOrder(orderid) {
+  return axios.delete(ordersApiEndpoint+orderid)
+  .then((res) => {
+    return { id: orderid };
+  })
+  .catch((err) => {
+    return err;
+  })
+}
 
 function addItems(orderid, items) {
   var products = [];
