@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { graphql } from 'react-apollo';
 
-import AddAdditionalItems from './AddAdditionalItems';
+import ItemOrderForm from './ItemOrderForm';
 
 import mutation from '../mutations/CreateOrder';
 
@@ -24,7 +24,7 @@ class CreateNewOrder extends Component {
     })
   }
 
-  updateShoppingCart(nextShoppingCart) => {
+  updateShoppingCart(nextShoppingCart) {
     this.setState({
       shoppingCart: nextShoppingCart
     })
@@ -33,7 +33,7 @@ class CreateNewOrder extends Component {
   handleChangeOnCustomerID(e) {
     let target = e.target;
     this.setState({
-      customerid: target.value;
+      customerid: target.value
     })
   }
 
@@ -53,10 +53,10 @@ class CreateNewOrder extends Component {
             <label>Customer ID
               <input type="text" value={this.state.customerid} onChange={this.handleChangeOnCustomerID.bind(this)} />
             </label>
-            <ItemOrderForm items={null} updateShoppingCart={this.updateShoppingCart.bind(this)} />
+            <ItemOrderForm items={null} total={"0.00"} updateShoppingCart={this.updateShoppingCart.bind(this)} />
         </div>
         <div className="card-action">
-          <a onClick={this.props.toggleOrderForm}>Cancel</a>
+          <a onClick={this.toggleOrderForm}>Cancel</a>
           <a onClick={this.submitNewOrder.bind(this)}>Create</a>
         </div>
       </div>

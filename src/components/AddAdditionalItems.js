@@ -16,7 +16,7 @@ class AddAdditionalItems extends Component {
     }
   }
 
-  updateShoppingCart(nextShoppingCart) => {
+  updateShoppingCart(nextShoppingCart) {
     this.setState({
       itemsToSubmit: nextShoppingCart
     })
@@ -61,7 +61,7 @@ class AddAdditionalItems extends Component {
       <div className="card blue-grey darken-1">
         <div className="card-content white-text">
           <span className="card-title">Add New Items</span>
-            <ItemOrderForm items={this.props.items} updateShoppingCart={this.updateShoppingCart.bind(this)} />
+            <ItemOrderForm items={this.props.items} total={this.props.total} updateShoppingCart={this.updateShoppingCart.bind(this)} />
         </div>
         <div className="card-action">
           <a onClick={this.props.toggleAvailableItems}>Cancel</a>

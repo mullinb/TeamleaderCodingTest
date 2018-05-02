@@ -1,47 +1,48 @@
 import React, { Component } from 'react';
-import graphql from 'graphql';
+import { graphql } from 'react-apollo';
 
-import AvailableItemsList from './AvailableItemsList';
+import AvailableItemsList from './AvailableItemsList'
 
-class ItemOrderSheet extends Component {
+import query from '../queries/GetAllProducts';
+
+
+class ItemOrderForm extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       shoppingCart: [{}],
-      subtotal: 0,
-      newTotal: 0,
-      currentTotal: 0
+      subtotal: '',
+      newTotal: '',
+      currentTotal: ''
     }
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    if (!nextProps.data.loading) {
-      var nextShoppingCart = {};
-      nextProps.data.products.forEach((p) => {
-        if (_.find(nextProps.items, { productid: p.id })) {
-          return;
-        }
-        nextShoppingCart[p.id] = { id: p.id, quantity: 0 };
-      })
-      return {
-        subtotal: 0,
+    return {
+        subtotal: "0.00",
         newTotal: nextProps.total,
         currentTotal: nextProps.total
       }
-    } else {
-      return prevState;
-    }
+  }
+
+  renderTotalLine() {
+    console.log(this.state);
+    if (this.props.total !== "0.00") {
+      return <div> Subtotal: ${this.state.subtotal}  New Total: ${this.state.newTotal}</div>
+    } else return <div> Total: ${this.state.newTotal}</div>
   }
 
   updateQuantity(e) {
     let target = e.target;
+    var nextShoppingCart;
     this.setState((prevState) => {
-      var nextShoppingCart = prevState.shoppingCart;
+      nextShoppingCart = prevState.shoppingCart;
       nextShoppingCart[target.name] = {
         id: target.name,
         quantity: target.value
       };
+      console.log(nextShoppingCart);
       return {
         shoppingCart: nextShoppingCart
       }
@@ -68,12 +69,16 @@ class ItemOrderSheet extends Component {
   }
 
   render() {
+    if (this.props.data.loading) {
+      return null;
+    }
     return (
-      <AvailableItemsList updateQuantity={this.updateQuantity.bind(this)} items={this.props.items}/>
-      <div> Subtotal: ${this.state.subtotal}  New Total: ${this.state.newTotal}</div>
+      <div>
+        <AvailableItemsList updateQuantity={this.updateQuantity.bind(this)} shoppingCart={this.state.shoppingCart} products={this.props.data.products} items={this.props.items}/>
+          {this.renderTotalLine()}
+      </div>
     )
-
   }
 }
 
-export default ItemOrderSheet;
+export default graphql(query)(ItemOrderForm);
