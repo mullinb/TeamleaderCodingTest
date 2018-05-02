@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
-import { graphql } from 'react-apollo';
+import { compose, graphql } from 'react-apollo';
 
 import OrderItemsList from './OrderItemsList';
 import AddAdditionalItems from './AddAdditionalItems';
 
 import getAllOrdersQuery from '../queries/GetAllOrders';
 import { query, options } from '../queries/GetOrderDetail';
-import mutation from '../mutations/PlaceOrder';
+import placeOrderMutation from '../mutations/PlaceOrder';
+import deleteOrderMutation from '../mutations/DeleteOrder';
 
 class OrderDetail extends Component {
   constructor(props) {
@@ -26,7 +27,11 @@ class OrderDetail extends Component {
   }
 
   placeOrder() {
-    this.props.mutate({
+    if (this.props.data.order.items.length === 0) {
+      console.log("cannot place empty order");
+      return;
+    }
+    this.props.placeOrder({
       variables: {
         orderid: this.props.data.order.id
       },
@@ -38,6 +43,27 @@ class OrderDetail extends Component {
       const order = res.data.placeOrder;
       console.log("The following order has been dispatched!\n" + `order ID: ${order.id} | Customer: ${order.customername} | total: ${order.total}`);
       this.props.hideOrderDetail();
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+  }
+
+  deleteOrder() {
+    this.props.deleteOrder({
+      variables: {
+        orderid: this.props.data.order.id
+      },
+      refetchQueries: [{
+        query: getAllOrdersQuery
+      }]
+    })
+    .then((res) => {
+      console.log("The following order has been deleted!\n" + `order ID: ${res.data.deleteOrder.id}`);
+      this.props.hideOrderDetail();
+    })
+    .catch((err) => {
+      console.log(err);
     })
   }
 
@@ -69,6 +95,7 @@ class OrderDetail extends Component {
           <div className="card-action">
             <a onClick={this.props.hideOrderDetail}>BACK</a>
             <a id={id} onClick={this.placeOrder.bind(this)}>PLACE ORDER</a>
+            <a id={id} onClick={this.deleteOrder.bind(this)}>DELETE ORDER</a>
           </div>
         </div>
       </div>
@@ -76,4 +103,12 @@ class OrderDetail extends Component {
   }
 }
 
-export default graphql(mutation)(graphql(query, options)(OrderDetail));
+export default compose(
+  graphql(placeOrderMutation, {
+    name: 'placeOrder'
+  }),
+  graphql(deleteOrderMutation, {
+    name: 'deleteOrder'
+  }),
+  graphql(query, options))
+  (OrderDetail);

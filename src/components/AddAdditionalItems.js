@@ -5,38 +5,31 @@ import _ from 'lodash';
 import ItemOrderForm from './ItemOrderForm';
 
 import mutation from '../mutations/AddItem';
-import { query, options } from '../queries/GetOrderDetail'
+import { query, options } from '../queries/GetOrderDetail';
+import convertCartObjectToArray from '../helpers/shoppingCartHelper';
 
 
 class AddAdditionalItems extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      itemsToSubmit: []
+      shoppingCart: [{}]
     }
   }
 
   updateShoppingCart(nextShoppingCart) {
     this.setState({
-      itemsToSubmit: nextShoppingCart
+      shoppingCart: nextShoppingCart
     })
   }
 
   submitNewItems(e) {
     e.preventDefault();
-    var itemsToSubmit = [];
-    for (var p in this.state.shoppingCart) {
-      if (this.state.shoppingCart[p].quantity > 0) {
-        itemsToSubmit.push({
-          id: p,
-          quantity: this.state.shoppingCart[p].quantity
-        })
-      }
-    }
+    var items = convertCartObjectToArray(this.state.shoppingCart);
     this.props.mutate({
       variables: {
         orderid: this.props.orderid,
-        items: itemsToSubmit
+        items: items
       },
       refetchQueries: [{
         query,
@@ -61,7 +54,7 @@ class AddAdditionalItems extends Component {
       <div className="card blue-grey darken-1">
         <div className="card-content white-text">
           <span className="card-title">Add New Items</span>
-            <ItemOrderForm items={this.props.items} total={this.props.total} updateShoppingCart={this.updateShoppingCart.bind(this)} />
+            <ItemOrderForm items={this.props.items} total={this.props.total} shoppingCart={this.state.shoppingCart} updateShoppingCart={this.updateShoppingCart.bind(this)} />
         </div>
         <div className="card-action">
           <a onClick={this.props.toggleAvailableItems}>Cancel</a>

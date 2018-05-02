@@ -3,25 +3,22 @@ import { graphql } from 'react-apollo';
 
 import ItemOrderForm from './ItemOrderForm';
 
+import query from '../queries/GetAllOrders'
 import mutation from '../mutations/CreateOrder';
+import convertCartObjectToArray from '../helpers/shoppingCartHelper';
 
 class CreateNewOrder extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      showOrderForm: false,
       customerid: '',
-      shoppingCart: [{}]
+      shoppingCart: []
     }
     this.toggleOrderForm = this.toggleOrderForm.bind(this);
   }
 
   toggleOrderForm() {
-    this.setState((prevState) => {
-      return {
-        showOrderForm: !prevState.showOrderForm
-      }
-    })
+    this.props.toggleOrderForm();
   }
 
   updateShoppingCart(nextShoppingCart) {
@@ -38,10 +35,25 @@ class CreateNewOrder extends Component {
   }
 
   submitNewOrder() {
+    var items = convertCartObjectToArray(this.state.shoppingCart);
     this.props.mutate({
       variables: {
-        items:this.state.shoppingCart
-      }
+        customerid: this.state.customerid,
+        items: items
+      },
+      refetchQueries: [{
+        query
+      }]
+    })
+    .then((res) => {
+      this.toggleOrderForm();
+      this.setState({
+        customerid: '',
+        shoppingCart: []
+      })
+    })
+    .catch((err) => {
+      console.log(err);
     })
   }
 
@@ -50,10 +62,10 @@ class CreateNewOrder extends Component {
       <div className="card green darken-3">
         <div className="card-content white-text">
           <span className="card-title">Create New Order</span>
-            <label>Customer ID
-              <input type="text" value={this.state.customerid} onChange={this.handleChangeOnCustomerID.bind(this)} />
-            </label>
-            <ItemOrderForm items={null} total={"0.00"} updateShoppingCart={this.updateShoppingCart.bind(this)} />
+          <div className="input-field">
+                 <input id="customer_id" type="text" value={this.state.customerid} placeholder="Enter Customer ID" onChange={this.handleChangeOnCustomerID.bind(this)} />
+          </div>
+            <ItemOrderForm items={null} total={"0.00"} shoppingCart={this.state.shoppingCart} updateShoppingCart={this.updateShoppingCart.bind(this)} />
         </div>
         <div className="card-action">
           <a onClick={this.toggleOrderForm}>Cancel</a>
@@ -66,13 +78,11 @@ class CreateNewOrder extends Component {
   render() {
     return (
       <div>
-        <a onClick={this.toggleOrderForm} className="waves-effect waves-light btn-small">
-          {this.state.showOrderForm ? "Cancel" : "Create New Order"}
-        </a>
-        {this.state.showOrderForm ? this.renderNewOrderForm() : null}
+        {this.props.show ? this.renderNewOrderForm() : null}
       </div>
     )
   }
 }
+
 
 export default graphql(mutation)(CreateNewOrder);
