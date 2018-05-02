@@ -31,7 +31,9 @@ class AvailableItemsList extends Component {
       }
       return (
         <div key={id}>{id} {description} | Category: {category} | Price: ${price}
-          <input name={id} type="number" min="0" value={this.props.shoppingCart[id] ? this.props.shoppingCart[id].quantity : 0} placeholder="Enter Quantity" onChange={this.updateQuantity.bind(this)} />
+          <div>
+            <input style={{"width": "200px"}} name={id} type="number" min="0" value={this.props.shoppingCart[id] ? this.props.shoppingCart[id].quantity : 0} onChange={this.updateQuantity.bind(this)} />
+          </div>
         </div>
       )
     })

@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import { graphql } from 'react-apollo';
+import { Link } from 'react-router-dom';
 
 import IndividualOrderListing from "./IndividualOrderListing";
+
+import query from '../queries/GetAllOrders';
 
 class OrderList extends Component {
   constructor(props) {
@@ -9,30 +12,32 @@ class OrderList extends Component {
     this.renderAllOrders = this.renderAllOrders.bind(this);
   }
 
-  showOrderDetail(e) {
-    this.props.showOrderDetail(e)
-  }
-
   renderAllOrders() {
-    return this.props.orders.map(order => {
+    return this.props.data.orders.map(order => {
       return (
-        <IndividualOrderListing
-          key={order.id}
-          order={order}
-          showOrderDetail={this.showOrderDetail.bind(this)} />
+        <Link key={order.id} to={"/order/" + order.id}>
+          <IndividualOrderListing order={order} />
+        </Link>
       )
     })
   }
 
   render() {
+    if (this.props.data.loading) {
+      return (<div>Orders loading...</div>)
+    }
     return (
-      <ul className="collection with-header">
-        <li className="collection-header"><h4>Orders</h4></li>
-        {this.renderAllOrders()}
-      </ul>
+      <div>
+        <ul className="collection with-header">
+          <li className="collection-header"><h4>Orders</h4></li>
+          {this.renderAllOrders()}
+        </ul>
+        <Link to="/createNew" className="waves-effect waves-light btn-large teal darken-4">
+          {"Create New Order"}
+        </Link>
+      </div>
     )
   }
 }
 
-
-export default OrderList;
+export default graphql(query)(OrderList);

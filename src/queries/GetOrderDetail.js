@@ -22,7 +22,7 @@ export const options = {
   options: (ownProps) => {
     return ({
       variables: {
-        id: ownProps.id
+        id: ownProps.match.params.id
       }
     })
   }
