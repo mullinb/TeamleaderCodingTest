@@ -3,7 +3,8 @@ const axios = require('axios');
 const {
   GraphQLObjectType,
   GraphQLString,
-  GraphQLList
+  GraphQLList,
+  GraphQLNonNull
 } = graphql;
 
 const OrderItemType = require('./order_item_type');
@@ -15,7 +16,7 @@ const OrderType = new GraphQLObjectType({
   fields: {
     id: { type: GraphQLString },
     customerid: {
-      type: GraphQLString,
+      type: GraphQLNonNull(GraphQLString),
       resolve: (parent) => parent['customer-id']
     },
     customername: {

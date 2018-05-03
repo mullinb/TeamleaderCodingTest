@@ -4,7 +4,7 @@ const {
     GraphQLString,
     GraphQLInputObjectType,
     GraphQLList,
-    GraphQLBoolean
+    GraphQLNonNull
 } = graphql;
 
 const OrderType = require('./types/order_type');
@@ -19,7 +19,7 @@ const mutation = new GraphQLObjectType({
     createOrder: {
       type: OrderType,
       args: {
-        customerid: { type: GraphQLString },
+        customerid: { type: GraphQLNonNull(GraphQLString) },
         items: {
           type: new GraphQLList(AddItemsType)
         }

@@ -18,6 +18,9 @@ module.exports = {
 };
 
 function createOrder(customerid, items) {
+  if (!customerid) {
+    throw new Error("No customer ID provided");
+  }
   var products = [];
   return axios.get(customersApiEndpoint+customerid)
   .then((res) => {
@@ -156,6 +159,8 @@ function placeOrder(orderid) {
   return axios.get(ordersApiEndpoint + orderid)
   .then((res)=>{
     thisOrder = res.data;
+    thisOrder.orderid = thisOrder.id;
+    delete thisOrder.id;
     return axios.post(dispatchOrderEndpoint, thisOrder)
   })
   .then((res) => {
