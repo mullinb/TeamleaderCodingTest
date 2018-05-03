@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { compose, graphql } from 'react-apollo';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 
 import OrderItemsList from './OrderItemsList';
 import AddAdditionalItems from './AddAdditionalItems';
@@ -43,7 +43,7 @@ class OrderDetail extends Component {
     .then((res) => {
       const order = res.data.placeOrder;
       console.log("The following order has been dispatched!\n" + `order ID: ${order.id} | Customer: ${order.customername} | total: ${order.total}`);
-      this.props.hideOrderDetail();
+      this.props.history.push("/");
     })
     .catch((err) => {
       console.log(err);
@@ -61,7 +61,7 @@ class OrderDetail extends Component {
     })
     .then((res) => {
       console.log("The following order has been deleted!\n" + `order ID: ${res.data.deleteOrder.id}`);
-      this.props.hideOrderDetail();
+      this.props.history.push("/");
     })
     .catch((err) => {
       console.log(err);
@@ -105,7 +105,7 @@ class OrderDetail extends Component {
   }
 }
 
-export default compose(
+export default withRouter(compose(
   graphql(placeOrderMutation, {
     name: 'placeOrder'
   }),
@@ -113,4 +113,4 @@ export default compose(
     name: 'deleteOrder'
   }),
   graphql(query, options))
-  (OrderDetail);
+  (OrderDetail));

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { graphql } from 'react-apollo';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 
 import ItemOrderForm from './ItemOrderForm';
 
@@ -42,9 +42,10 @@ class CreateNewOrder extends Component {
       }]
     })
     .then((res) => {
+      this.props.history.push("/")
     })
     .catch((err) => {
-      console.log(err);
+      console.log(err.message);
     })
   }
 
@@ -69,4 +70,4 @@ class CreateNewOrder extends Component {
 }
 
 
-export default graphql(mutation)(CreateNewOrder);
+export default withRouter(graphql(mutation)(CreateNewOrder));
