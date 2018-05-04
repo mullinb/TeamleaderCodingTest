@@ -26,8 +26,6 @@
 
 <ul>
   <li>Test for bugs/error-handling.</li>
-  <li>Would like to be able to create new orders.</li>
-  <li>No browser back/forward support due to lack of router usage (True SPA??).</li>
 </ul>
 
 ### To try this app:
